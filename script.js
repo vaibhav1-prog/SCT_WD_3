@@ -1,95 +1,128 @@
-const cells = document.querySelectorAll('.cell');
-const resultDisplay = document.getElementById('result');
-const restartButton = document.getElementById('restart');
-const clickSound = document.getElementById('click-sound');
-const winSound = document.getElementById('win-sound');
-
-let board = ['', '', '', '', '', '', '', '', ''];
-let currentPlayer = 'X';
-let isGameActive = true;
-
-const winningConditions = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-];
-
-// Function to handle cell click
-function handleCellClick(event) {
-    const cell = event.target;
-    const index = cell.getAttribute('data-cell-index');
-
-    // Prevent actions if the cell is already filled or the game is inactive
-    if (board[index] !== '' || !isGameActive) {
-        return;
-    }
-
-    // Update the board and display the current player's symbol
-    board[index] = currentPlayer;
-    cell.innerText = currentPlayer;
-
-    // Add filled class for animation
-    cell.classList.add('filled');
-
-    // Play click sound
-    clickSound.play();
-
-    checkResult();
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: aqua;
 }
 
-// Function to check the result of the game
-function checkResult() {
-    let roundWon = false;
-
-    // Check all winning conditions
-    for (let condition of winningConditions) {
-        const [a, b, c] = condition;
-        if (board[a] === '' || board[b] === '' || board[c] === '') {
-            continue;
-        }
-        if (board[a] === board[b] && board[a] === board[c]) {
-            roundWon = true;
-            break;
-        }
-    }
-
-    if (roundWon) {
-        resultDisplay.innerText = `Player ${currentPlayer} wins!`;
-        winSound.play();  // Play win sound
-        isGameActive = false;
-        return;
-    }
-
-    if (!board.includes('')) {
-        resultDisplay.innerText = 'It\'s a draw!';
-        isGameActive = false;
-        return;
-    }
-
-    // Switch players
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+h1 {
+    margin-bottom: 20px;
 }
 
-// Function to restart the game
-function restartGame() {
-    isGameActive = true;
-    currentPlayer = 'X';
-    board = ['', '', '', '', '', '', '', '', ''];
-    resultDisplay.innerText = '';
-    cells.forEach(cell => {
-        cell.innerText = '';
-        cell.classList.remove('filled');  // Remove animation class
-    });
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 5px;
 }
 
-// Event listeners
-cells.forEach(cell => {
-    cell.addEventListener('click', handleCellClick);
-});
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: pink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    cursor: pointer;
+    border: 1px solid #000;
+    transition: background-color 0.3s, transform 0.2s;
+}
 
-restartButton.addEventListener('click', restartGame);
+.cell:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+.cell.filled {
+    transition: background-color 0.3s, transform 0.3s;
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#result {
+    margin: 20px;
+    font-size: 24px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #007BFF;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* ===================== */
+/* 📱 Responsive Styles  */
+/* ===================== */
+
+/* Tablets (≤ 768px) */
+@media (max-width: 768px) {
+    #game-board {
+        grid-template-columns: repeat(3, 80px);
+    }
+
+    .cell {
+        width: 80px;
+        height: 80px;
+        font-size: 28px;
+    }
+
+    #result {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/* Mobile phones (≤ 480px) */
+@media (max-width: 480px) {
+    #game-board {
+        grid-template-columns: repeat(3, 60px);
+    }
+
+    .cell {
+        width: 60px;
+        height: 60px;
+        font-size: 22px;
+    }
+
+    #result {
+        font-size: 18px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}
