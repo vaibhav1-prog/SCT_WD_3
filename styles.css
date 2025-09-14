@@ -78,3 +78,51 @@ button:hover {
     color: white;
     transform: scale(1.05);
 }
+
+/* ===================== */
+/* 📱 Responsive Styles  */
+/* ===================== */
+
+/* Tablets (≤ 768px) */
+@media (max-width: 768px) {
+    #game-board {
+        grid-template-columns: repeat(3, 80px);
+    }
+
+    .cell {
+        width: 80px;
+        height: 80px;
+        font-size: 28px;
+    }
+
+    #result {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/* Mobile phones (≤ 480px) */
+@media (max-width: 480px) {
+    #game-board {
+        grid-template-columns: repeat(3, 60px);
+    }
+
+    .cell {
+        width: 60px;
+        height: 60px;
+        font-size: 22px;
+    }
+
+    #result {
+        font-size: 18px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}
