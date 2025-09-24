@@ -1,1 +1,3 @@
+https://vaibhav-tic-taetoegame.netlify.app/
+
 Skill Craft Technology Internship Project. This is my Internhip project of WEB DEVELEOPMENT at SKILL CRAFT TECHNOLOGY. In this project I have made a TIC-TAE-TOE GAME where two players can compete aginst each other. I have provided source code of every file and it can be downloaded and used in browser. I hope u will enjoy playing this,thank you.
